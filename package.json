@@ -1,6 +1,6 @@
 {
   "name": "@sudobility/design",
-  "version": "1.1.67",
+  "version": "1.1.68",
   "description": "Design system library with tokens, colors, typography and variants",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
