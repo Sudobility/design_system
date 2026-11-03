@@ -375,8 +375,8 @@ const variants: VariantsType = {
       default: () =>
         themed(
           'button',
-          'bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/80 border-transparent focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200',
-          'bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800 border-transparent focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed dark:bg-blue-600 dark:hover:bg-blue-700 dark:active:bg-blue-800 dark:text-white dark:focus-visible:ring-blue-400 inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200'
+          'bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/80 border-transparent focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200 h-10',
+          'bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800 border-transparent focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed dark:bg-blue-600 dark:hover:bg-blue-700 dark:active:bg-blue-800 dark:text-white dark:focus-visible:ring-blue-400 inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200 h-10'
         ),
       small: () =>
         themed(
@@ -393,14 +393,14 @@ const variants: VariantsType = {
       withIcon: () =>
         themed(
           'button',
-          'bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/80 border-transparent focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200',
-          'bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800 border-transparent focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed dark:bg-blue-600 dark:hover:bg-blue-700 dark:active:bg-blue-800 dark:text-white dark:focus-visible:ring-blue-400 inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200'
+          'bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/80 border-transparent focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200 h-10',
+          'bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800 border-transparent focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed dark:bg-blue-600 dark:hover:bg-blue-700 dark:active:bg-blue-800 dark:text-white dark:focus-visible:ring-blue-400 inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200 h-10'
         ),
       fullWidth: () =>
         themed(
           'button',
-          'bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/80 border-transparent focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center w-full rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200',
-          'bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800 border-transparent focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed dark:bg-blue-600 dark:hover:bg-blue-700 dark:active:bg-blue-800 dark:text-white dark:focus-visible:ring-blue-400 flex items-center justify-center w-full rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200'
+          'bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/80 border-transparent focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center w-full rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200 h-10',
+          'bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800 border-transparent focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed dark:bg-blue-600 dark:hover:bg-blue-700 dark:active:bg-blue-800 dark:text-white dark:focus-visible:ring-blue-400 flex items-center justify-center w-full rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200 h-10'
         ),
     },
 
@@ -408,8 +408,8 @@ const variants: VariantsType = {
       default: () =>
         themed(
           'button',
-          'bg-secondary text-secondary-foreground hover:bg-secondary/80 active:bg-secondary/70 border-transparent focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200',
-          'bg-gray-100 text-gray-900 hover:bg-gray-200 active:bg-gray-300 border-transparent focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed dark:bg-gray-800 dark:text-gray-50 dark:hover:bg-gray-700 dark:active:bg-gray-600 inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200'
+          'bg-secondary text-secondary-foreground hover:bg-secondary/80 active:bg-secondary/70 border-transparent focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200 h-10',
+          'bg-gray-100 text-gray-900 hover:bg-gray-200 active:bg-gray-300 border-transparent focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed dark:bg-gray-800 dark:text-gray-50 dark:hover:bg-gray-700 dark:active:bg-gray-600 inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200 h-10'
         ),
       small: () =>
         themed(
@@ -426,8 +426,8 @@ const variants: VariantsType = {
       withIcon: () =>
         themed(
           'button',
-          'bg-secondary text-secondary-foreground hover:bg-secondary/80 active:bg-secondary/70 border-transparent focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200',
-          'bg-gray-100 text-gray-900 hover:bg-gray-200 active:bg-gray-300 border-transparent focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed dark:bg-gray-800 dark:text-gray-50 dark:hover:bg-gray-700 dark:active:bg-gray-600 inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200'
+          'bg-secondary text-secondary-foreground hover:bg-secondary/80 active:bg-secondary/70 border-transparent focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200 h-10',
+          'bg-gray-100 text-gray-900 hover:bg-gray-200 active:bg-gray-300 border-transparent focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed dark:bg-gray-800 dark:text-gray-50 dark:hover:bg-gray-700 dark:active:bg-gray-600 inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200 h-10'
         ),
     },
 
@@ -435,8 +435,8 @@ const variants: VariantsType = {
       default: () =>
         themed(
           'button',
-          'bg-transparent hover:bg-accent text-foreground border border-input focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200',
-          'bg-transparent hover:bg-gray-50 active:bg-gray-100 text-gray-900 border border-gray-300 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed dark:bg-transparent dark:hover:bg-gray-800 dark:active:bg-gray-700 dark:text-gray-50 dark:border-gray-600 inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200'
+          'bg-transparent hover:bg-accent text-foreground border border-input focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200 h-10',
+          'bg-transparent hover:bg-gray-50 active:bg-gray-100 text-gray-900 border border-gray-300 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed dark:bg-transparent dark:hover:bg-gray-800 dark:active:bg-gray-700 dark:text-gray-50 dark:border-gray-600 inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200 h-10'
         ),
       small: () =>
         themed(
@@ -453,8 +453,8 @@ const variants: VariantsType = {
       withIcon: () =>
         themed(
           'button',
-          'bg-transparent hover:bg-accent text-foreground border border-input focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200',
-          'bg-transparent hover:bg-gray-50 active:bg-gray-100 text-gray-900 border border-gray-300 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed dark:bg-transparent dark:hover:bg-gray-800 dark:active:bg-gray-700 dark:text-gray-50 dark:border-gray-600 inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200'
+          'bg-transparent hover:bg-accent text-foreground border border-input focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200 h-10',
+          'bg-transparent hover:bg-gray-50 active:bg-gray-100 text-gray-900 border border-gray-300 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed dark:bg-transparent dark:hover:bg-gray-800 dark:active:bg-gray-700 dark:text-gray-50 dark:border-gray-600 inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200 h-10'
         ),
     },
 
@@ -462,14 +462,14 @@ const variants: VariantsType = {
       default: () =>
         themed(
           'button',
-          'bg-destructive text-destructive-foreground hover:bg-destructive/90 active:bg-destructive/80 border-transparent focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200',
-          'bg-red-600 text-white hover:bg-red-700 active:bg-red-800 border-transparent focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed dark:bg-red-600 dark:hover:bg-red-700 dark:active:bg-red-800 dark:text-white inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200'
+          'bg-destructive text-destructive-foreground hover:bg-destructive/90 active:bg-destructive/80 border-transparent focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200 h-10',
+          'bg-red-600 text-white hover:bg-red-700 active:bg-red-800 border-transparent focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed dark:bg-red-600 dark:hover:bg-red-700 dark:active:bg-red-800 dark:text-white inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200 h-10'
         ),
       outline: () =>
         themed(
           'button',
-          'bg-transparent hover:bg-destructive/10 text-destructive border border-destructive/30 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200',
-          'bg-transparent hover:bg-red-50 active:bg-red-100 text-red-600 border border-red-300 focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed dark:hover:bg-red-900/20 dark:text-red-400 dark:border-red-800 inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200'
+          'bg-transparent hover:bg-destructive/10 text-destructive border border-destructive/30 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200 h-10',
+          'bg-transparent hover:bg-red-50 active:bg-red-100 text-red-600 border border-red-300 focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed dark:hover:bg-red-900/20 dark:text-red-400 dark:border-red-800 inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200 h-10'
         ),
       small: () =>
         themed(
@@ -483,8 +483,8 @@ const variants: VariantsType = {
       default: () =>
         themed(
           'button',
-          'bg-transparent hover:bg-muted text-muted-foreground border-transparent focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200',
-          'bg-transparent hover:bg-gray-100 active:bg-gray-200 text-gray-700 border-transparent focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed dark:bg-transparent dark:hover:bg-gray-800 dark:active:bg-gray-700 dark:text-gray-300 inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200'
+          'bg-transparent hover:bg-muted text-muted-foreground border-transparent focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200 h-10',
+          'bg-transparent hover:bg-gray-100 active:bg-gray-200 text-gray-700 border-transparent focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed dark:bg-transparent dark:hover:bg-gray-800 dark:active:bg-gray-700 dark:text-gray-300 inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200 h-10'
         ),
       small: () =>
         themed(
@@ -538,8 +538,8 @@ const variants: VariantsType = {
       wallet: () =>
         themed(
           'button',
-          'bg-card border border-input text-foreground hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200',
-          'bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200'
+          'bg-card border border-input text-foreground hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200 h-10',
+          'bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200 h-10'
         ),
       connect: () =>
         themedFrom(
@@ -549,8 +549,8 @@ const variants: VariantsType = {
       disconnect: () =>
         themed(
           'button',
-          'bg-transparent hover:bg-destructive/10 text-destructive border border-destructive/30 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200',
-          'bg-transparent hover:bg-red-50 active:bg-red-100 text-red-600 border border-red-300 focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed dark:hover:bg-red-900/20 dark:text-red-400 dark:border-red-800 inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200'
+          'bg-transparent hover:bg-destructive/10 text-destructive border border-destructive/30 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200 h-10',
+          'bg-transparent hover:bg-red-50 active:bg-red-100 text-red-600 border border-red-300 focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed dark:hover:bg-red-900/20 dark:text-red-400 dark:border-red-800 inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200 h-10'
         ),
     },
   },
@@ -729,20 +729,20 @@ const variants: VariantsType = {
     default: () =>
       themed(
         'input',
-        'border border-input bg-muted text-foreground block w-full rounded-lg px-3 py-2 text-sm placeholder:text-muted-foreground transition-colors duration-200 focus:border-ring focus:bg-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
-        'border bg-gray-50 dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 focus:border-blue-500 focus:ring-blue-500 dark:focus:border-blue-400 dark:focus:ring-blue-400 block w-full rounded-md px-3 py-2 text-sm placeholder:text-gray-500 dark:placeholder:text-gray-400 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2'
+        'border border-input bg-muted text-foreground block w-full rounded-lg px-3 py-2 text-sm h-10 placeholder:text-muted-foreground transition-colors duration-200 focus:border-ring focus:bg-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
+        'border bg-gray-50 dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 focus:border-blue-500 focus:ring-blue-500 dark:focus:border-blue-400 dark:focus:ring-blue-400 block w-full rounded-md px-3 py-2 text-sm h-10 placeholder:text-gray-500 dark:placeholder:text-gray-400 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2'
       ),
     search: () =>
       themed(
         'input',
-        'border border-input bg-muted text-foreground block w-full rounded-lg px-3 py-2 text-sm placeholder:text-muted-foreground transition-colors duration-200 focus:border-ring focus:bg-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
-        'border bg-gray-50 dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 focus:border-blue-500 focus:ring-blue-500 dark:focus:border-blue-400 dark:focus:ring-blue-400 block w-full rounded-md px-3 py-2 text-sm placeholder:text-gray-500 dark:placeholder:text-gray-400 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2'
+        'border border-input bg-muted text-foreground block w-full rounded-lg px-3 py-2 text-sm h-10 placeholder:text-muted-foreground transition-colors duration-200 focus:border-ring focus:bg-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
+        'border bg-gray-50 dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 focus:border-blue-500 focus:ring-blue-500 dark:focus:border-blue-400 dark:focus:ring-blue-400 block w-full rounded-md px-3 py-2 text-sm h-10 placeholder:text-gray-500 dark:placeholder:text-gray-400 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2'
       ),
     error: () =>
       themed(
         'input',
-        'border border-destructive bg-muted text-foreground block w-full rounded-lg px-3 py-2 text-sm placeholder:text-muted-foreground transition-colors duration-200 focus:border-destructive focus:bg-background focus:outline-none focus:ring-2 focus:ring-destructive focus:ring-offset-2',
-        'border bg-gray-50 dark:bg-gray-800 border-red-300 dark:border-red-700 text-gray-900 dark:text-gray-100 focus:border-red-500 focus:ring-red-500 block w-full rounded-md px-3 py-2 text-sm placeholder:text-gray-500 dark:placeholder:text-gray-400 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2'
+        'border border-destructive bg-muted text-foreground block w-full rounded-lg px-3 py-2 text-sm h-10 placeholder:text-muted-foreground transition-colors duration-200 focus:border-destructive focus:bg-background focus:outline-none focus:ring-2 focus:ring-destructive focus:ring-offset-2',
+        'border bg-gray-50 dark:bg-gray-800 border-red-300 dark:border-red-700 text-gray-900 dark:text-gray-100 focus:border-red-500 focus:ring-red-500 block w-full rounded-md px-3 py-2 text-sm h-10 placeholder:text-gray-500 dark:placeholder:text-gray-400 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2'
       ),
 
     // Sizes
@@ -763,8 +763,8 @@ const variants: VariantsType = {
     withIcon: () =>
       themed(
         'input',
-        'border border-input bg-muted text-foreground block w-full rounded-lg pl-10 pr-3 py-2 text-sm placeholder:text-muted-foreground transition-colors duration-200 focus:border-ring focus:bg-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
-        'border bg-gray-50 dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 focus:border-blue-500 focus:ring-blue-500 dark:focus:border-blue-400 dark:focus:ring-blue-400 block w-full rounded-md pl-10 pr-3 py-2 text-sm placeholder:text-gray-500 dark:placeholder:text-gray-400 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2'
+        'border border-input bg-muted text-foreground block w-full rounded-lg pl-10 pr-3 py-2 text-sm h-10 placeholder:text-muted-foreground transition-colors duration-200 focus:border-ring focus:bg-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
+        'border bg-gray-50 dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 focus:border-blue-500 focus:ring-blue-500 dark:focus:border-blue-400 dark:focus:ring-blue-400 block w-full rounded-md pl-10 pr-3 py-2 text-sm h-10 placeholder:text-gray-500 dark:placeholder:text-gray-400 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2'
       ),
   },
 

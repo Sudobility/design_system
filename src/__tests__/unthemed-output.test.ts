@@ -14,9 +14,13 @@ import * as design from '../index';
 import { getActiveTheme } from '../themes/configure';
 import { collectStrings } from './_walk';
 
-/** Every string, and their hash, as the pre-theme-coverage release emitted them. */
+/**
+ * Every string, and their hash, as the current release emits them. Rebaselined
+ * when the default (medium) `button` and `input` variants gained an explicit
+ * `h-10` so Buttons, Text Inputs and Selects share one control height.
+ */
 const BASELINE_SIZE = 60179;
-const BASELINE_HASH = 'a078e4eb6b507dff2a5c21f64b8801f9a3b84f1d39ef008b0e940d1854fdc9e3';
+const BASELINE_HASH = '6d53e724bc4fd7f75f769fa4ca692c068e515887d21c26f3d3e6c2006736809a';
 
 /** Changes the theme, or added with the theme-coverage work (not in the baseline). */
 const SKIP = new Set(['configureTheme', 'getThemeColor', 'hslTokenToCss']);

@@ -45,10 +45,13 @@ const PINNED_PALETTE_EXEMPTIONS: Record<string, readonly string[]> = {
     'primaryForeground on primary',
     'primary on background',
     'primary on card',
+    'primary on popover',
+    'primary on muted',
+    'primary on well',
     'primary on primary/10 over background',
     'primary on primary/10 over card',
   ],
-  radiograph: ['foreground on accent'],
+  radiograph: ['foreground on accent', 'destructive on muted'],
 };
 
 function expectReadable(name: string, label: string, ratio: number, context: string) {

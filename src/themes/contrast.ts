@@ -126,17 +126,37 @@ export const TEXT_PAIRS: ReadonlyArray<readonly [ContrastToken, ContrastToken]> 
   ['successForeground', 'success'],
   ['warningForeground', 'warning'],
   ['infoForeground', 'info'],
-  // Colored text
+  // Colored text on every surface it can land on. The fleet uses the status
+  // colors and `primary` as text far more than as fills (`text-success`,
+  // `text-primary`, ...), and drops them onto recessed surfaces too — the
+  // stat tiles on every design page are `text-success`/`text-warning` over
+  // `bg-muted`. So each is held to AA on `background`, `card`, `popover`, and
+  // the recessed `muted` and `well` planes, not just the raised surfaces.
   ['primary', 'background'],
   ['primary', 'card'],
+  ['primary', 'popover'],
+  ['primary', 'muted'],
+  ['primary', 'well'],
   ['destructive', 'background'],
   ['destructive', 'card'],
+  ['destructive', 'popover'],
+  ['destructive', 'muted'],
+  ['destructive', 'well'],
   ['success', 'background'],
   ['success', 'card'],
+  ['success', 'popover'],
+  ['success', 'muted'],
+  ['success', 'well'],
   ['warning', 'background'],
   ['warning', 'card'],
+  ['warning', 'popover'],
+  ['warning', 'muted'],
+  ['warning', 'well'],
   ['info', 'background'],
   ['info', 'card'],
+  ['info', 'popover'],
+  ['info', 'muted'],
+  ['info', 'well'],
 ];
 
 /**

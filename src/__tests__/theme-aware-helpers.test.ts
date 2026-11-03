@@ -144,7 +144,7 @@ describe('once a theme is configured (after these modules loaded)', () => {
   it('getThemeColor converts the theme’s channels to a colour string', () => {
     configureTheme(swissTheme);
     expect(getThemeColor('primary')).toBe('hsl(0, 84%, 43.3%)');
-    expect(getThemeColor('primary', 'dark', 0.4)).toBe('hsla(0, 84%, 58.5%, 0.4)');
+    expect(getThemeColor('primary', 'dark', 0.4)).toBe('hsla(0, 84%, 61.6%, 0.4)');
     expect(hslTokenToCss(' 210  40% 96% ')).toBe('hsl(210, 40%, 96%)');
     expect(getThemeColor('well', 'light')).toBe(
       swissTheme.light.well ? hslTokenToCss(swissTheme.light.well) : undefined

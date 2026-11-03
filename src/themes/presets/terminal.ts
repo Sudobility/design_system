@@ -66,7 +66,7 @@ export const terminalTheme: ThemeDefinition = {
     mutedForeground: '120 18% 48%',
     accent: '95 55% 25%',
     accentForeground: '120 24% 78.6%',
-    destructive: '0 62% 57.6%',
+    destructive: '0 62% 59.3%',
     destructiveForeground: '120 24% 4%',
     success: '120 65% 72%',
     successForeground: '120 24% 4%',
