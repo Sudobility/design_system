@@ -1,315 +1,120 @@
-# design_system - AI Development Guide
+# design_system — AI Development Guide
 
-> **Git policy — never auto-commit or auto-push.** Leave your work in the working tree.
-> Run `git commit`, `git push`, `gh pr create`, or `scripts/push_all.sh` **only when the user
-> explicitly asks in that turn**. Approval for an earlier change does not carry forward, and
-> finishing a task is not permission to commit it.
+> **Git policy — never auto-commit or auto-push.** Leave work in the working tree.
+> Run `git commit`, `git push`, or `gh pr create` **only when the user explicitly asks in that
+> turn**. Approval for an earlier change does not carry forward; finishing a task is not
+> permission to commit it. Stay on the current branch — do not create feature branches.
 
-## Overview
+## What it is
 
-`@sudobility/design` is a standalone, framework-agnostic design system library providing design tokens, colors, typography, component variants, and utility functions for consistent UI development. It serves as the styling foundation for the 0xmail ecosystem (including `@johnqh/mail-box-components`) and supports both web (Tailwind CSS + tailwind-merge) and React Native (NativeWind) targets. All tokens are fully typed with `as const` for literal type inference and tree-shakeable named exports.
+`@sudobility/design` is a standalone, framework-agnostic design system library: design tokens,
+colors, typography, component variants, a 48-theme engine, and utility helpers. It is the styling
+foundation for the 0xmail ecosystem. Targets both **web** (Tailwind CSS + `tailwind-merge`) and
+**React Native** (NativeWind). All tokens use `as const`; exports are named and tree-shakeable.
 
-- **Package name:** `@sudobility/design`
-- **Version:** 1.1.40
-- **License:** MIT
-- **Author:** John Q Huang
-- **Module type:** ES Module (`"type": "module"`)
-- **Package manager:** Bun
+- Package: `@sudobility/design` · License: **BUSL-1.1** · Author: John Q Huang
+- **ES Module only** (`"type": "module"`) — no CJS build is produced.
+- Package manager: **Bun**. Published to **GitHub Packages** (`npm.pkg.github.com`), public access.
+- `.npmrc` scopes `@sudobility` to GitHub Packages; consumers need a `read:packages` token.
 
-## Project Structure
+## Commands (verified)
+
+```bash
+bun install
+bun run build          # tsc (type-check + emit) → vite (ES bundle) → scripts/fix-esm-imports.mjs
+bun run dev            # vite build --watch
+bun run type-check     # tsc --noEmit
+bun run test:unit      # vitest run (one-shot; 28 files / ~6200 tests). NOTE: there is no `test` script
+bun run test:ui        # vitest --ui
+bun run test:coverage  # v8 coverage; thresholds 95% stmt/fn/line, 90% branch
+bun run lint           # eslint src --fix && tsc --noEmit
+bun run format         # prettier --write
+bunx vitest run src/__tests__/<file>.test.ts   # run a single test file
+```
+
+## Layout
 
 ```
 src/
-├── index.ts                      # Main web entry point - all exports
-├── index.native.ts               # React Native entry point (cn uses clsx only, no tailwind-merge)
-├── core/
-│   ├── simple-variants.ts        # SimpleVariants class, createVariants(), createQuickVariants()
-│   ├── typography.ts             # textVariants object, createTextStyle(), combineTextStyles(), createResponsiveText()
-│   └── variants.ts               # Pre-built component variant definitions (button, card, badge, input, alert, loading)
-├── tokens/
-│   ├── colors.ts                 # rawColors, semanticColors, componentColors, getColorClasses(), buildColorClass()
-│   ├── gradients.ts              # GRADIENTS, GRADIENT_CLASSES, getGradient(), combineGradient()
-│   └── tokens.ts                 # designTokens (spacing, margin, padding, gap, radius, shadow, typography, animation, z-index, breakpoints, grid, flex, width, height)
-├── themes/                       # Swappable, framework-agnostic theme engine (see "Theme System" below)
-│   ├── types.ts                  # ThemeDefinition, ThemeTokens (HSL-channel colors + structural tokens), ThemeClassOverrides, ThemeName
-│   ├── configure.ts              # Module-level active-theme state: configureTheme(), getActiveTheme(), getActiveThemeName(), getClassOverride()
-│   ├── css-generator.ts          # generateThemeCSS() → :root (light) + .dark CSS custom properties
-│   ├── tailwind-preset.ts        # createTailwindPreset() (web, hsl(var(--token))), createNativeWindPreset() (RN, resolved HSL)
-│   ├── registry.ts               # themes: Record<ThemeName, ThemeDefinition>
-│   ├── index.ts                  # Public theme exports (@sudobility/design/themes)
-│   └── presets/                  # One file per theme (defaultTheme, materialTheme, carbonTheme, ...)
-├── utilities/
-│   ├── ai-helpers.ts             # SEMANTIC_COLOR_MAP, UI_PATTERNS, SIZE_SCALES, getSemanticColor(), applyUIPattern(), createComponentWithIntent(), validateVariantConfig(), safeResolveVariant(), getVariantSuggestions(), analyzeVariantUsage()
-│   ├── component-helpers.ts      # sizeClasses, getSizeClasses(), focusRing, focusVisible, transitions, hoverState(), disabledState(), loadingState, buttonVariant(), inputVariant(), cardVariant(), textVariant()
-│   ├── status-colors.ts          # statusIndicatorColors, cardVariantColors, calloutVariantColors, sectionBadgeColors + getter functions
-│   ├── theme-utils.ts            # withOpacity(), responsive(), themeColor(), getSemanticColor(), gradient(), spacing(), animation()
-│   ├── ui-constants.ts           # UI_CONSTANTS, UI_PATTERNS (combined class patterns), getUIConstant(), combineUI()
-│   ├── utils.ts                  # cn() - clsx + tailwind-merge (web)
-│   └── utils.native.ts           # cn() - clsx only (React Native / NativeWind)
-├── types/
-│   └── variant-types.ts          # TypedVariantConfig, TypedVariantsType, TypedButtonVariants, TypedCardVariants, TypedBadgeVariants, TypedInputVariants, TypedAlertVariants, VariantResolutionOptions, VariantResolutionResult, ComponentSize, ComponentVariant, etc.
-├── content/
-│   ├── seo-keywords.ts           # SEO keyword sets and page-specific keyword combinators
-│   └── structured-data.ts        # Schema.org structured data factories (Organization, SoftwareApplication, WebPage, AboutPage, TechArticle)
-└── __tests__/
-    ├── colors.test.ts
-    ├── complete.test.ts
-    ├── component-helpers.test.ts
-    ├── index.test.ts
-    ├── simple-variants.test.ts
-    ├── theme-utils.test.ts
-    ├── typography.test.ts
-    ├── ui-constants.test.ts
-    ├── ui.test.ts
-    ├── utils.test.ts
-    └── variants.test.ts
+├── index.ts              # Web entry: all exports + inline `ui` object + SEO/structured-data
+├── index.native.ts       # RN entry: cn() = clsx only; omits `ui`, SEO/structured-data
+├── core/                 # simple-variants.ts, variants.ts, typography.ts, themed-classes.ts
+├── tokens/               # colors.ts, tokens.ts, gradients.ts, touch-targets.ts
+├── themes/               # theme engine (see below) + presets/ (48 ThemeDefinition files)
+├── utilities/            # ai-helpers, component-helpers, status-colors, theme-utils,
+│                         #   ui-constants, utils.ts (web cn), utils.native.ts (RN cn)
+├── types/variant-types.ts
+├── content/              # seo-keywords.ts, structured-data.ts (web only)
+└── __tests__/            # 28 vitest specs
 ```
 
-## Key Exports
+Path alias `@/*` → `./src/*` (set in both `tsconfig.json` and `vite.config.ts`).
 
-### Colors (`colors`)
-Three-tier color system:
-- `colors.raw` - Base palette values (blue, purple, neutral, red, orange, amber, green, web3 chains). Use sparingly.
-- `colors.semantic` - Purpose-based tokens (text, background, border, brand, state, action, web3) with `light`/`dark` values.
-- `colors.component` - Ready-to-use Tailwind class strings for button, card, badge, input, alert components with `base`/`dark`/`focus`/`hover`/`disabled` sub-keys.
+## Architecture
 
-Utility functions: `getColorClasses(component, variant, states?)`, `buildColorClass(bg, text, border?, states?)`.
+### Build pipeline
+`tsc` emits types + JS, then `vite build` produces **ES-only** bundles, then
+`scripts/fix-esm-imports.mjs` runs. Entry outputs: `dist/index.js`, `dist/index.native.js`,
+`dist/themes/index.js`, plus shared chunks and `.d.ts` files. `clsx` and `tailwind-merge` are
+externalized as peer deps.
+- **Gotcha:** `tsc` uses `moduleResolution: "bundler"` and emits extensionless relative imports
+  (`from './core'`) that Node's native ESM loader rejects. `fix-esm-imports.mjs` rewrites them to
+  explicit `./core/index.js` etc. It must run after every build; `bun run build` already chains it.
 
-### Design Tokens (`designTokens`)
-Tailwind class tokens on a 4px grid system:
-- `spacing`, `margin`, `padding`, `gap` (xs through 5xl)
-- `radius`, `shadow` scales
-- `typography` - comprehensive: `family`, `size`, `semantic`, `weight`, `style`, `decoration`, `decorationStyle`, `decorationThickness`, `underlineOffset`, `leading`, `tracking`, `transform`, `align`, `verticalAlign`, `whitespace`, `wordBreak`, `overflow`, `indent`
-- `animation`, `ease`, `zIndex`, `breakpoints`, `grid`, `gridResponsive`, `flex`, `width`, `height`
+### Dual entry points
+`index.ts` (web) vs `index.native.ts` (RN). On web `cn()` = `clsx` + `tailwind-merge`; on RN
+`cn()` = `clsx` only (NativeWind handles merge). The RN entry omits the `ui` object and
+SEO/structured-data exports. Keep platform-agnostic additions exported from **both**.
 
-### Text Variants (`textVariants`)
-Function-based typography system returning Tailwind class strings:
-- `heading` - display (hero/xl/lg/md/sm), h1-h6, responsive variants
-- `body` - xl/lg/md/sm/xs, plus `.strong`, `.emphasis`, `.muted` sub-variants
-- `caption` - default, emphasis, uppercase
-- `lead` - lg/md/sm
-- `link` - default, subtle, muted, external
-- `code` - inline, block, small
-- `label` - default, required, optional, helper, error, success
-- `web3` - address, addressShort, hash, amount, chain, symbol
-- `truncate` - line, lines2-4
-- `selection` - default, brand
+### Three-tier colors (`src/tokens/colors.ts`)
+1. `colors.raw` — hex palette; do not use directly in components.
+2. `colors.semantic` — purpose-based tokens with `light`/`dark` values.
+3. `colors.component` — ready-to-use Tailwind class strings (`base`/`dark`/`focus`/`hover`/`disabled`).
 
-Helpers: `createTextStyle(family, size, weight, color, options)`, `combineTextStyles(...styles)`, `createResponsiveText(baseStyle, breakpoints)`.
+### Variants
+- `variants` — nested object of functions, e.g. `variants.button.primary.default()`.
+- `SimpleVariants` class (`createVariants` / `createQuickVariants`) — `.get()`, `.sized()`,
+  `.nested()`, `.when()`, `.combine()` with built-in fallbacks and config validation.
 
-### Component Variants (`variants`)
-Pre-built Tailwind class strings for:
-- **button** - primary (default/small/large/withIcon/fullWidth), secondary, outline, destructive, ghost, link, gradient, web3
-- **card** - default, elevated, interactive, success, warning, attention, error (each with size variants)
-- **badge** - default, secondary, primary, success, warning, attention, error, web3 chains
-- **input** - default, search, error, success
-- **alert** - default, info, success, warning, attention, destructive
-- **loading** - spinner, skeleton, pulse variants
+### Theme system (`src/themes/`)
+A theme is **pure data** (`ThemeDefinition`, no React) projected onto web or RN. 48 presets grouped
+in `registry.ts`: aesthetic/brand, real-world design systems (material, fluent, carbon, polaris,
+primer, …), retro computers, game consoles, and color-scheme systems (nord, dracula, …).
+- Colors are **HSL channels without the `hsl()` wrapper** (`primary: '221.2 83.2% 53.3%'`) so
+  Tailwind `<alpha-value>` works (`bg-primary/10`). Separate `light`/`dark` token sets. Roles follow
+  shadcn/Radix convention plus one addition: **`well`/`wellForeground`** (the plane below
+  `background`). It is named `well` not `inset` because a Tailwind color named `inset` would shadow
+  the built-in `ring-inset` utility. `well` is optional on the type but every preset defines it and
+  `themes.test.ts` enforces that.
+- **Web:** `generateThemeCSS(theme)` → `:root` + `.dark` CSS vars; `createTailwindPreset()` maps
+  tokens via `hsl(var(--token) / <alpha-value>)`. **RN:** `createNativeWindPreset(theme)` resolves
+  tokens to concrete HSL at build time (dark is baked per build, not a runtime cascade).
+- **Activation:** `configureTheme(theme, { native? })` sets a module-level singleton once at app
+  startup. The token/variant/typography layers use a `tc(semantic, legacy)` / `themed()` helper:
+  with a theme active they emit **semantic** classes (`bg-primary`); with no theme they emit the
+  **legacy** hardcoded classes (`bg-blue-600`) for backward compatibility. **No theme configured =
+  no behavior change** — theming is fully opt-in. Structural themes append `classOverrides.<comp>.base`.
+- No CSS files are committed; CSS is generated on demand. Themes are exposed via the
+  `@sudobility/design/themes` subpath export.
 
-### SimpleVariants System
-Platform-agnostic variant resolver class:
-- `SimpleVariants` class with `.get()`, `.sized()`, `.nested()`, `.when()`, `.combine()`, `.has()`, `.addFallback()`
-- `createVariants(config)` - factory function
-- `createQuickVariants(config)` - shorthand with `.button()`, `.alert()`, `.input()`, `.badge()` methods
+## Common tasks
 
-### `cn()` Utility
-```typescript
-cn('text-red-500', 'text-blue-500') // "text-blue-500" (tailwind-merge resolves conflicts)
-cn('base', { 'active': isActive }, isLarge && 'px-6')
-```
-Web: `clsx` + `tailwind-merge`. React Native: `clsx` only (NativeWind handles merging).
+- **New color:** add to `rawColors` → `semanticColors` (light/dark) → `componentColors` → test in
+  `__tests__/colors.test.ts` → `bun run build && bun run test:unit`.
+- **New variant:** add to `src/core/variants.ts` (and its type interface) → `__tests__/variants.test.ts`.
+- **New token:** add to the right object in `src/tokens/tokens.ts`.
+- **New theme:** copy `presets/default.ts`, fill `light`/`dark` HSL-channel tokens + structural
+  tokens + optional `classOverrides`/`nativeClassOverrides` (include `well`/`wellForeground`); add the
+  slug to the `ThemeName` union in `types.ts`; register in `registry.ts` and re-export from
+  `themes/index.ts`. When matching an existing rendered color, read it from a screenshot rather than
+  computing it — browser alpha compositing rounds a step below the naive product.
+- **New utility:** add to `src/utilities/`, export from `index.ts` (and `index.native.ts` if
+  platform-agnostic), add tests.
+- **`ui` object:** defined inline in `src/index.ts`; edit there. Not in the RN entry.
 
-### AI Helpers
-- `SEMANTIC_COLOR_MAP` - maps intents (success/error/warning/info/primary/secondary/accent/muted/emphasis/subtle) to text color classes
-- `UI_PATTERNS` - named layout and interaction patterns (centeredContainer, flexBetween, elevatedCard, clickable, focusable, disabled, etc.)
-- `SIZE_SCALES` - xs/sm/md/lg/xl with padding, text, height classes
-- `getSemanticColor(intent)`, `applyUIPattern(pattern, additional?)`, `createSizedComponent(size, baseClasses)`, `createComponentWithIntent({ intent, size, pattern, additional })`
-- `validateVariantConfig(config, options)` - returns `{ isValid, errors, warnings, suggestions }`
-- `safeResolveVariant(config, component, variant, options)` - returns `{ classes, usedFallback, warnings, requested }`
-- `getVariantSuggestions(config, component, partial)` - autocomplete helper
-- `analyzeVariantUsage(config)` - optimization analysis
+## Key conventions
 
-### Status Colors
-- `statusIndicatorColors` / `getStatusIndicatorColor()` - dot/icon colors
-- `cardVariantColors` / `getCardVariantColors()` - container bg/border/text
-- `calloutVariantColors` / `getCalloutVariantColors()` - gradient bg + text pairs
-- `sectionBadgeColors` / `getSectionBadgeColors()` - badge container + icon pairs
-
-### Gradients
-- `GRADIENTS` - backgrounds, buttons, text, effects
-- `GRADIENT_CLASSES` - pre-composed (primaryButton, heroButton, headerButton, pageLayout, gradientText)
-- `getGradient(category, variant)`, `combineGradient(gradientKey, additionalClasses)`
-
-### UI Utilities (`ui` object)
-Inline in `index.ts`, exported as `ui`. Contains ready-to-use Tailwind class strings for:
-- `ui.layout` - container, section, flex, grid patterns
-- `ui.section` - default, hero, subtle, accent, gradient backgrounds
-- `ui.background`, `ui.border`, `ui.shadow`, `ui.spacing`
-- `ui.text` - h1-h6, display, hero, body, lead, caption, label, link, code, status, emphasis, muted, uppercase
-- `ui.transition`, `ui.states` (hover, focus, disabled, loading)
-- `ui.table` - container, thead, tbody, tr, td
-- `ui.card` - default, large, bordered, interactive, feature
-- `ui.badge` - blue, green, purple, amber, gray
-- `ui.web3` - walletButton, chainBadge(chain), addressText
-
-### Capitalized Aliases
-`Colors`, `Tokens`, `Typography`, `Variants` - aliases for `colors`, `designTokens`, `textVariants`, `variants`.
-
-### Content Helpers
-- SEO keyword sets: `BASE_KEYWORDS`, `USER_FOCUSED_KEYWORDS`, `DEVELOPER_KEYWORDS`, `DOCUMENTATION_KEYWORDS`, `WEB3_TRENDING_KEYWORDS`, `TECHNICAL_SEO_KEYWORDS`, `ACCESSIBILITY_KEYWORDS`
-- Page keyword getters: `getHomePageKeywords()`, `getAboutPageKeywords(domain)`, `getDocumentationKeywords()`, etc.
-- Structured data factories: `createBaseOrganization()`, `createSoftwareApplicationData()`, `createWebPageData()`, `createAboutPageData()`, `createTechArticleData()`
-
-## Development Commands
-
-```bash
-# Install dependencies
-bun install
-
-# Build (tsc + vite)
-bun run build
-
-# Development mode with watch
-bun run dev
-
-# Type checking only
-bun run type-check
-
-# Testing (vitest, jsdom environment)
-bun run test              # Run tests in watch mode
-bun run test:ui           # Vitest UI
-bun run test:coverage     # Coverage report (v8 provider, 95% threshold)
-
-# Run a single test file
-bun vitest run src/__tests__/index.test.ts
-
-# Lint and format
-bun run lint              # ESLint + TypeScript check (with --fix)
-bun run format            # Prettier format
-bun run format:check      # Check formatting without writing
-```
-
-## Architecture / Patterns
-
-### Build Pipeline
-- **TypeScript** (`tsc`) for type checking, then **Vite** for bundling
-- Outputs: `dist/index.esm.js` (ESM), `dist/index.cjs.js` (CJS), `dist/index.native.js` (React Native), `dist/index.d.ts` (types)
-- `vite-plugin-dts` generates declaration files
-- `clsx` and `tailwind-merge` are externalized as peer dependencies
-
-### Token System
-- **4px grid** - all spacing values are multiples of 4px
-- **Semantic naming** - tokens use purpose-based names (primary, secondary, success, error, warning, attention, info)
-- **Dark mode first** - every color/component has explicit `dark:` Tailwind variants
-- **`as const`** - all token objects use `as const` for literal type inference
-- **Function-based variants** - typography and component variants are functions returning strings (lazy evaluation, composable)
-
-### Color Architecture (three levels)
-1. **Raw Colors** (`colors.raw`) - hex palette values. Do not use directly in components.
-2. **Semantic Colors** (`colors.semantic`) - purpose-based tokens with `light`/`dark` object values. Recommended for theme logic.
-3. **Component Colors** (`colors.component`) - ready-to-use Tailwind class strings with `base`/`dark`/`focus`/`hover`/`disabled` keys. Use for component styling.
-
-### Theme System (multi-style)
-
-`src/themes/` layers a swappable, framework-agnostic theme engine on top of the token/variant system. A theme is **pure data** (`ThemeDefinition`) — no React — that can be projected onto web (CSS variables) or React Native (resolved values). This is the shadcn/ui CSS-variable convention formalized into a typed, multi-theme engine.
-
-**A theme = data (`themes/types.ts`)**
-- `ThemeTokens` — color roles stored as **HSL channels without the `hsl()` wrapper** (e.g. `primary: '221.2 83.2% 53.3%'`) so Tailwind can apply `<alpha-value>` (this is what makes `bg-primary/10` work). Separate `light` and `dark` token sets.
-- Color roles follow the shadcn/Radix convention: `background/foreground`, `card`, `popover`, `primary`, `secondary`, `muted`, `accent`, `destructive`, plus state roles `success/warning/info`, and `border/input/ring`. Every surface role pairs with a `*Foreground` (text-on-surface).
-- `well`/`wellForeground` is the one addition to that convention: the plane *below* `background` (code wells, input troughs, table bodies) — GitHub Primer's `canvas.inset`. It is **optional** on `ThemeTokens` so themes authored before the role stay valid; `generateThemeCSS()` falls back to `background`. Every shipped preset defines it anyway, and `themes.test.ts` enforces that. It is named `well` rather than `inset` because a Tailwind color called `inset` generates `.ring-inset`, which shadows the built-in ring-style utility of the same name and silently overrides `--tw-ring-color`.
-- Structural tokens: `radius`, `borderWidth`, `shadowSm/Md/Lg`, `fontSans`, `fontMono`.
-- Optional `classOverrides` / `nativeClassOverrides` — extra Tailwind classes for structural signatures CSS vars can't express (e.g. neo-brutalism's thick borders + hard-offset shadows, glassmorphism's `backdrop-blur`, Material's pill buttons). `nativeClassOverrides` is used on React Native to drop web-only utilities like `backdrop-blur`.
-
-**Projection (same tokens → two targets)**
-- **Web:** `generateThemeCSS(theme)` emits `:root { --primary: ... }` (light) + `.dark { ... }`. `createTailwindPreset()` maps tokens to Tailwind colors via `hsl(var(--token) / <alpha-value>)`. Dark mode is a runtime `.dark` class cascade.
-- **React Native:** NativeWind can't read CSS custom properties, so `createNativeWindPreset(theme)` resolves tokens to concrete HSL values from `theme.light` at build time (dark is baked per build, not a runtime cascade).
-
-**Activation & dual-mode fallback (`themes/configure.ts`)**
-- `configureTheme(theme, { native? })` sets a module-level singleton once at app startup. `getActiveTheme()` / `getClassOverride()` read it.
-- The token/variant/typography layers use a **`tc(semantic, legacy)` helper** (`getActiveTheme() ? semantic : legacy`): with a theme active, components emit **semantic classes** (`bg-primary`, `text-muted-foreground`, `border-border`); with no theme they emit the **legacy hardcoded classes** (`bg-blue-600`, `dark:bg-blue-700`) for backward compatibility. See `tokens/colors.ts` (`componentColors` getters selecting `semanticComponentColors` vs `legacyComponentColors`), `core/variants.ts` (`themed()`), and `core/typography.ts`.
-- Structural themes append their `classOverrides.<component>.base` on top of the semantic classes via `themed()`.
-
-**Presets (`themes/presets/`, registered in `themes/registry.ts`)**
-- Aesthetic themes: `default, navy, radiograph, neo-brutalism, glassmorphism, cyberpunk, vaporwave, retro, y2k, swiss, linear, notion, web3, gaming, defi, prediction-market, gambling, terminal, windows-3.1, windows-2000`. `navy` (deep navy / neon violet / ice cyan) was extracted from `sanity-web` and `radiograph` (near-black film / bone type / exposure blue / amber flare) from `raidr_web`; both are dark-only, with identical `light` and `dark` token sets. `radiograph` is the one that inverts *sections* rather than the document, which it does by swapping `foreground` and `background` — no second token set needed.
-- Real-world design systems: `material` (Google Material 3), `fluent` (Microsoft Fluent 2), `carbon` (IBM), `polaris` (Shopify), `primer` (GitHub), `atlassian`, `spectrum` (Adobe), `base-web` (Uber Base), `lightning` (Salesforce), `ant-design`, `astryx` (Meta), `apple` (Apple HIG), `govuk` (GOV.UK), `uswds` (U.S. Web Design System).
-- Retro computers: `classic-mac` (Apple Classic Macintosh), `commodore-64` (Pepto VIC-II palette), `game-boy` (Nintendo Game Boy DMG), `amiga` (Amiga Workbench "Old Blue"), `nextstep` (NeXTSTEP grayscale "chiseled steel" — beveled `classOverrides`).
-- Game consoles / platforms: `playstation` (Sony), `xbox` (Microsoft), `nintendo` (Switch), `steam` (Valve).
-- Color-scheme design systems: `nord`, `dracula` (+ Alucard light), `solarized`, `catppuccin` (Latte/Mocha), `gruvbox`.
-
-No CSS files are committed — CSS is generated on demand via `generateThemeCSS()`. Themes are exposed to consumers through the `@sudobility/design/themes` subpath export.
-
-### Dual Entry Points
-- `src/index.ts` - web: `cn()` uses `clsx` + `tailwind-merge`, includes SEO/structured-data exports, `ui` object, legacy exports
-- `src/index.native.ts` - React Native: `cn()` uses `clsx` only (NativeWind handles merging), omits SEO/structured-data and `ui` object
-
-### Variant System
-Two approaches:
-1. **Direct variants** (`variants`) - deeply nested object with function values, accessed like `variants.button.primary.default()`
-2. **SimpleVariants class** - wrapper with `.get('button', 'primary')`, `.sized()`, `.nested()`, `.when()`, `.combine()`, built-in fallbacks, and configuration validation
-
-### Path Alias
-`@/*` maps to `./src/*` (configured in both `tsconfig.json` and `vite.config.ts`).
-
-### Test Configuration
-- Vitest with jsdom environment
-- Coverage via v8 provider with 95% statement/function/line and 90% branch thresholds
-- Tests located in `src/__tests__/`
-
-## Common Tasks
-
-### Adding a New Color
-1. Add hex values to `rawColors` in `src/tokens/colors.ts`
-2. Add semantic mapping in `semanticColors` with `light`/`dark` values
-3. Add component-specific Tailwind classes in `componentColors` with `base`/`dark`/`focus`/`hover`/`disabled` keys
-4. Add tests in `src/__tests__/colors.test.ts`
-5. Run `bun run build && bun run test`
-
-### Adding a New Component Variant
-1. Add variant functions to `src/core/variants.ts` under the appropriate component key
-2. If adding a new component, also update the `VariantsType` interface in the same file
-3. Update enhanced types in `src/types/variant-types.ts` if needed
-4. Add tests in `src/__tests__/variants.test.ts`
-5. Run `bun run build && bun run test`
-
-### Adding a New Design Token
-1. Add to the appropriate object in `src/tokens/tokens.ts` (spacing, typography, animation, etc.)
-2. Run `bun run build && bun run test`
-
-### Adding a New Theme
-1. Create `src/themes/presets/<name>.ts` exporting a `ThemeDefinition` (copy `default.ts`). Fill `light`/`dark` `ThemeTokens` as **HSL channels** (`'H S% L%'`, no `hsl()` wrapper), the structural tokens (`radius`, `borderWidth`, `shadow*`, `font*`), and optional `classOverrides`/`nativeClassOverrides` for structural signatures CSS vars can't express. Include `well`/`wellForeground`; the tests require every preset to define them.
-   When a value must reproduce an existing rendered color, take it from a screenshot rather than from arithmetic — compositing two alpha layers in a browser rounds a step below the naive product, which is how `navy`'s `well` came out one unit off on first pass.
-2. Add the slug to the `ThemeName` union in `src/themes/types.ts`.
-3. Register it in `src/themes/registry.ts` (import + `themes` record) and re-export it from `src/themes/index.ts`.
-4. Run `bun run build && bun run test`
-
-### Adding a New Utility Function
-1. Add function to the appropriate file in `src/utilities/`
-2. Export from `src/index.ts` (and `src/index.native.ts` if platform-agnostic)
-3. Add tests in the corresponding `src/__tests/` file
-4. Run `bun run build && bun run test`
-
-### Updating the `ui` Object
-The `ui` object is defined inline in `src/index.ts`. Edit it directly there. It is not available in the React Native entry point.
-
-### Publishing
-`bun run prepublishOnly` runs the build automatically. The package is published with restricted access (`"access": "restricted"`).
-
-## Peer / Key Dependencies
-
-### Peer Dependencies (required by consumers)
-- `clsx` >= 2.0.0 - conditional class name composition
-- `tailwind-merge` >= 2.0.0 - intelligent Tailwind class deduplication (web only)
-
-### Dev Dependencies (key)
-- `typescript` ^5.9.3 - strict mode, ES2019 target, bundler module resolution
-- `vite` ^7.1.12 - build tool
-- `vite-plugin-dts` ^4.5.4 - declaration file generation
-- `vitest` ^4.0.4 - test runner
-- `@vitest/coverage-v8` ^4.0.4 - coverage provider
-- `eslint` ^9.38.0 + `@typescript-eslint/*` - linting
-- `prettier` ^3.6.2 - formatting
-- `jsdom` ^27.0.1 - test environment
-
-## Git Workflow
-
-- Do not use feature branches for code changes. Always stay on the current branch.
+- 4px spacing grid; semantic (purpose-based) naming; dark-mode-first (explicit `dark:` variants).
+- Typography and component variants are **functions returning class strings** (lazy, composable).
+- Publishing: `prepublishOnly` runs `bun run build`. `publishConfig.access` is `public`; CI
+  (`.github/workflows/ci-cd.yml`) publishes to GitHub Packages via a shared reusable workflow.

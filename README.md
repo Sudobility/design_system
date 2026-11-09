@@ -15,6 +15,15 @@ A comprehensive design system library providing semantic design tokens, colors, 
 
 ## Installation
 
+This package is published to **GitHub Packages** (not the public npm registry). Configure the
+`@sudobility` scope to point at GitHub Packages before installing — add to your project's `.npmrc`:
+
+```
+@sudobility:registry=https://npm.pkg.github.com
+```
+
+(Installing requires a GitHub token with `read:packages` access configured for that registry.)
+
 ```bash
 npm install @sudobility/design
 ```
@@ -199,28 +208,17 @@ console.log('Optimization suggestions:', analysis.optimizationSuggestions);
 
 ## Themes
 
-The design system ships multiple visual styles. Each app picks one at build time; no runtime switching is required.
+The design system ships **48 visual themes**. Each app picks one at build time; no runtime switching is required. Every theme is pure data (a `ThemeDefinition`) with `light`/`dark` token sets, structural tokens, and optional class overrides. Each is exported from `@sudobility/design/themes` as `<name>Theme` (e.g. `cyberpunkTheme`) and also available via the `themes` record keyed by slug.
 
-| Theme | Style | Primary |
-|-------|-------|---------|
-| `defaultTheme` | Clean, modern (current look) | Blue |
-| `neoBrutalismTheme` | Bold, raw, thick borders, offset shadows | Yellow/Black |
-| `glassmorphismTheme` | Frosted glass, translucent, backdrop-blur | Violet |
-| `cyberpunkTheme` | Neon-on-dark, glow effects, monospace | Cyan |
-| `vaporwaveTheme` | Retro-futuristic, pink/teal/purple | Purple |
-| `retroTheme` | Warm, vintage, serif fonts | Orange |
-| `y2kTheme` | Bubbly, bright pastels, pill shapes | Hot pink |
-| `swissTheme` | Helvetica, grid-precise, no shadows | Black/Red |
-| `linearTheme` | Dark-first, subtle, professional | Indigo |
-| `notionTheme` | Content-focused, warm gray, minimal | Warm blue |
-| `web3Theme` | Crypto-native, glassmorphic cards, pill shapes | Pink |
-| `gamingTheme` | Bold, immersive, glow effects, sharp corners | Purple |
-| `defiTheme` | Professional crypto-finance, monospace numbers | Teal |
-| `predictionMarketTheme` | Data-heavy, light-first, green/red outcomes | Blue |
-| `gamblingTheme` | Dark, luxurious, gold accents, bold CTAs | Green/Gold |
-| `terminalTheme` | Monochrome terminal, underlined actions, square panels | Green phosphor |
-| `windows31Theme` | Classic Windows 3.1, gray chrome, chunky controls | Windows blue |
-| `windows2000Theme` | Windows 2000, beveled 3D controls, Tahoma UI | Navy |
+**Aesthetic / brand:** `default`, `navy`, `radiograph`, `neo-brutalism`, `glassmorphism`, `cyberpunk`, `vaporwave`, `retro`, `y2k`, `swiss`, `linear`, `notion`, `web3`, `gaming`, `defi`, `prediction-market`, `gambling`, `terminal`, `windows-3.1`, `windows-2000`
+
+**Real-world design systems:** `material` (Google M3), `fluent` (Microsoft), `carbon` (IBM), `polaris` (Shopify), `primer` (GitHub), `atlassian`, `spectrum` (Adobe), `base-web` (Uber), `lightning` (Salesforce), `ant-design`, `astryx` (Meta), `apple` (HIG), `govuk`, `uswds`
+
+**Retro computers:** `classic-mac`, `commodore-64`, `game-boy`, `amiga`, `nextstep`
+
+**Game consoles / platforms:** `playstation`, `xbox`, `nintendo`, `steam`
+
+**Color-scheme design systems:** `nord`, `dracula`, `solarized`, `catppuccin`, `gruvbox`
 
 ### Switching Themes
 
@@ -322,8 +320,9 @@ export const myTheme: ThemeDefinition = {
 | `generateThemeCSS(theme)` | Function | Generate CSS custom property block |
 | `createTailwindPreset(theme)` | Function | Tailwind config preset (web) |
 | `createNativeWindPreset(theme)` | Function | NativeWind config preset (RN) |
-| `themes` | Record | All 10 themes indexed by name |
-| `defaultTheme`, `cyberpunkTheme`, ... | Object | Individual theme presets |
+| `getThemeColor(token)`, `hslTokenToCss(token)` | Function | Resolve a theme color token to a CSS color string (RN props, SVG, canvas) |
+| `themes` | Record | All 48 themes indexed by slug |
+| `defaultTheme`, `cyberpunkTheme`, ... | Object | Individual theme presets (48 total) |
 
 ## Component Helpers
 
@@ -389,22 +388,25 @@ const config: TypedVariantConfig = {
 
 ## Testing
 
-Run the test suite:
+Run the test suite (Vitest, jsdom):
 
 ```bash
-npm test                # Run tests
-npm run test:ui         # Run tests with UI
-npm run test:coverage   # Run tests with coverage
+npm run test:unit       # Run all tests once
+npm run test:ui         # Run tests with the Vitest UI
+npm run test:coverage   # Run tests with coverage (v8; 95% stmt/fn/line, 90% branch thresholds)
 ```
+
+> There is no `npm test` alias — use `npm run test:unit`.
 
 ## Development
 
 ```bash
-npm run dev             # Development mode with watch
-npm run build           # Build library
-npm run type-check      # TypeScript type checking
-npm run lint            # ESLint and TypeScript check
+npm run dev             # Build in watch mode
+npm run build           # Build library (tsc + vite + ESM import fixup)
+npm run type-check      # TypeScript type checking (tsc --noEmit)
+npm run lint            # ESLint (--fix) + type-check
 npm run format          # Format code with Prettier
+npm run format:check    # Check formatting without writing
 ```
 
 ## Design Philosophy
@@ -426,16 +428,8 @@ Semantic helpers and validation functions make it easier for AI assistants to ge
 
 ## License
 
-MIT
+BUSL-1.1 (Business Source License). See the `license` field in `package.json`.
 
 ## Author
 
 John Q Huang
-
-## Contributing
-
-Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for contribution guidelines.
-
-## Changelog
-
-See [CHANGELOG.md](./CHANGELOG.md) for version history and updates.
