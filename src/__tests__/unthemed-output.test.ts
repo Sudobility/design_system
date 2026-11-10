@@ -16,11 +16,13 @@ import { collectStrings } from './_walk';
 
 /**
  * Every string, and their hash, as the current release emits them. Rebaselined
- * when the default (medium) `button` and `input` variants gained an explicit
- * `h-10` so Buttons, Text Inputs and Selects share one control height.
+ * when the dropdown `trigger`/`triggerBordered` variants gained `cursor-pointer`
+ * so the dropdown control shows a pointer cursor like other clickable controls.
+ * (Previously rebaselined when the default medium `button`/`input` variants
+ * gained an explicit `h-10` for a shared control height.)
  */
 const BASELINE_SIZE = 60179;
-const BASELINE_HASH = '6d53e724bc4fd7f75f769fa4ca692c068e515887d21c26f3d3e6c2006736809a';
+const BASELINE_HASH = '13d75d1e1965099ee5976d03d334233f0d71a720252640fd658681b01f5a8a3b';
 
 /** Changes the theme, or added with the theme-coverage work (not in the baseline). */
 const SKIP = new Set(['configureTheme', 'getThemeColor', 'hslTokenToCss']);

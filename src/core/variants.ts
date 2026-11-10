@@ -2702,11 +2702,11 @@ const variants: VariantsType = {
       container: () => 'relative inline-block',
       trigger: () =>
         themedAuto(
-          'inline-flex justify-center items-center bg-transparent border-0 text-gray-900 dark:text-gray-100 focus:outline-none transition-colors'
+          'inline-flex cursor-pointer justify-center items-center bg-transparent border-0 text-gray-900 dark:text-gray-100 focus:outline-none transition-colors'
         ),
       triggerBordered: () =>
         themedAuto(
-          'inline-flex justify-center items-center bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:ring-offset-gray-950 transition-colors'
+          'inline-flex cursor-pointer justify-center items-center bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:ring-offset-gray-950 transition-colors'
         ),
 
       menu: () =>
